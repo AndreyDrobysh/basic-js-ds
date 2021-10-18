@@ -1,6 +1,6 @@
-const { NotImplementedError } = require('../extensions/index.js');
+// const { NotImplementedError } = require('../extensions/index.js');
 
-// const { Node } = require('../extensions/list-tree.js');
+const { Node } = require('../extensions/list-tree.js');
 
 /**
 * Implement simple binary search tree according to task description
@@ -8,39 +8,81 @@ const { NotImplementedError } = require('../extensions/index.js');
 */
 module.exports = class BinarySearchTree {
 
+  constructor () {
+    this.roots = null;
+  }
+  
   root() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    return this.roots
   }
 
-  add(/* data */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  add(data) {
+    
+    this.roots = getData(this.roots, data)
+
+    function getData(x, data) {
+      if (!x) {
+        return new Node(data)
+      }
+
+      if (data > x.data) {
+        x.right = getData(x.right, data)
+      }
+      if(data < x.data) {
+        x.left = getData(x.left, data) 
+      }
+      
+      
+      return x
+    }
   }
 
-  has(/* data */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  has(data) {
+
+    return this.find(data) ? true : false;
   }
 
-  find(/* data */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  find(data) {
+
+    return search(this.roots, data)
+    function search(x, data) {
+      if (!x) {
+        return null
+      }
+      if (x.data === data) {
+        return x
+      }
+      if (data > x.data) {
+        return search(x.right, data)
+      }
+      if (data < x.data) {
+        return search(x.left, data)
+      } 
+      
+    }
   }
 
-  remove(/* data */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  remove(data) {
+    
   }
 
   min() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+
+    let x = this.roots
+    while (x.left) {
+      x = x.left
+    }
+    return x.data
+  
   }
 
   max() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+
+    let x = this.roots
+    while (x.right) {
+      x = x.right
+    }
+    return x.data
   }
 
 }
